@@ -5,9 +5,10 @@
 
 **INTRODUCTION**
 ---
-The **Cambridge-driving Labeled Video Database (CamVid)** is one of the first automotive datasets to provide
-object-class semantic labels along with metadata for computer vision applications. This dataset addresses the need for
-more complex scene understanding beyond simple object detection, focusing on pixel-level semantic segmentation tasks.
+The [**Cambridge-driving Labeled Video Database (CamVid)**](https://www.kaggle.com/datasets/carlolepelaars/camvid) is
+one of the first automotive datasets to provide object-class semantic labels along with metadata for computer vision
+applications. This dataset addresses the need for more complex scene understanding beyond simple object detection,
+focusing on pixel-level semantic segmentation tasks.
 
 **DATA DESCRIPTION**
 ---
