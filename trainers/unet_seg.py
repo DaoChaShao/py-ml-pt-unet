@@ -32,7 +32,7 @@ class UNetSegmentationTrainer(QObject):
         self._model.train()
 
         _loss: float = 0.0
-        _total: float = 0.0
+        _batch_num: float = 0.0
         for features, labels in dataloader:
             features, labels = features.to(device(self._accelerator)), labels.to(device(self._accelerator))
 
@@ -47,10 +47,10 @@ class UNetSegmentationTrainer(QObject):
             loss.backward()
             self._optimiser.step()
 
-            _loss += loss.item() * features.size(0)
-            _total += labels.numel()
+            _loss += loss.item()
+            _batch_num += 1.0
 
-        return _loss / _total
+        return _loss / _batch_num
 
     def _epoch_valid(self, dataloader: DataLoader | TorchDataLoader) -> tuple[float, float]:
         """ Validate the model for one epoch
@@ -62,7 +62,8 @@ class UNetSegmentationTrainer(QObject):
 
         _loss: float = 0.0
         _correct: float = 0.0
-        _total: float = 0.0
+        _batch_num: float = 0.0
+        _total_pixels: float = 0.0
         with no_grad():
             for features, labels in dataloader:
                 features, labels = features.to(device(self._accelerator)), labels.to(device(self._accelerator))
@@ -75,11 +76,12 @@ class UNetSegmentationTrainer(QObject):
 
                 loss = self._criterion(outputs, labels)
 
-                _loss += loss.item() * features.size(0)
+                _loss += loss.item()
                 _correct += self._get_accuracy(outputs, labels)
-                _total += labels.numel()
+                _batch_num += 1.0
+                _total_pixels += labels.numel()
 
-        return _loss / _total, _correct / _total
+        return _loss / _batch_num, _correct / _total_pixels
 
     @staticmethod
     def _get_accuracy(outputs: Tensor, labels: Tensor) -> float:
