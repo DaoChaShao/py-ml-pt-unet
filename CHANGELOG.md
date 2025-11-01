@@ -5,6 +5,7 @@
 
 ### Chore
 
+- add CHANGELOG.md for version 0.0.1 with project updates ([f06cb30](https://github.com///commit/f06cb3087a603155a1fdf686d0e93453c08d6fe5))
 - add BSD 3-Clause License file ([6c878e7](https://github.com///commit/6c878e7750d29cf694077da0c04dff14c0b93381))
 - add CamVid data, such as train, valid and test images and its masks ([19e2e6c](https://github.com///commit/19e2e6c4c313c3a7dfbdc4feccb2c6f2f2b2f634))
 - add uv.lock ([6d5c8e2](https://github.com///commit/6d5c8e2fe7d92492fcd7a105ee3e2423f156c5f5))
@@ -34,4 +35,9 @@
 - create __init__.py with main function template ([eed733b](https://github.com///commit/eed733b5c6f38f39a1a1b5e0237fc04a17bc7971))
 - add .python-version file for Python version management ([f290c32](https://github.com///commit/f290c3236732f2bc1176c1d8c2d194c0a3448a6f))
 - add .gitignore to exclude Python and IDE-specific files ([5186080](https://github.com///commit/5186080fea9416dee53b3b0a8d1c0badbd82bea1))
+
+### Docs
+
+- update README.zh-CN.md to include a link to the CamVid dataset ([a574554](https://github.com///commit/a574554d8e3a7a474a70fd8ac05d4f43eaecd2fb))
+- update README.md to include a link to the CamVid dataset ([7e3cdd2](https://github.com///commit/7e3cdd20d3d01bac99357c5aa8bbefe3fb199326))
 
