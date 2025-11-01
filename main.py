@@ -76,7 +76,7 @@ def prepare_dataset():
     dataset_valid = UNetDataset(
         image_paths=valid[0],
         mask_paths=valid[1],
-        img_transformer=mask_transformer,
+        img_transformer=img_transformer,
         mask_transformer=mask_transformer
     )
     index_train: int = randint(0, len(dataset_train) - 1)
@@ -98,8 +98,8 @@ def prepare_dataset():
         batch_size=CONFIG.PREPROCESSOR.BATCHES,
         is_shuffle=CONFIG.PREPROCESSOR.IS_SHUFFLE,
     )
-    print(f"Number of training batches: {len(dataloader_train)}")
-    print(f"Number of validation batches: {len(dataloader_valid)}")
+    # print(f"Number of training batches: {len(dataloader_train)}")
+    # print(f"Number of validation batches: {len(dataloader_valid)}")
 
     return dataloader_train, dataloader_valid
 
@@ -110,6 +110,7 @@ def main() -> None:
 
     # Set up a model
     channels, height, width = train[0][0].shape
+    print(channels, height, width)
     model = UNetDoubleConvModel(channels, CONFIG.UNET_PARAMS.SEG_CLASSES, height, width, )
 
     # Set up an optimiser and loss function
