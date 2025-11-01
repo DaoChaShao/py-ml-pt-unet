@@ -36,8 +36,9 @@ class UNetDataset(Dataset):
         image = Image.open(self._image_paths[index]).convert("RGB")
         mask = Image.open(self._mask_paths[index]).convert("L")
 
-        if self._img_transformer is not None and self._mask_transformer is not None:
+        if self._img_transformer:
             image = self._img_transformer(image)
+        if self._mask_transformer:
             mask = self._mask_transformer(mask)
 
         return image, mask
