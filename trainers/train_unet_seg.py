@@ -3,7 +3,7 @@
 # @Time     :   2025/11/1 14:22
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   unet_seg.py
+# @File     :   train_unet_seg.py
 # @Desc     :   
 
 from PySide6.QtCore import QObject, Signal
@@ -16,11 +16,12 @@ class UNetSegmentationTrainer(QObject):
     """ Trainer class for managing training process """
     losses: Signal = Signal(int, float, float, float)
 
-    def __init__(self, model: nn.Module, optimiser, criterion, accelerator: str = "auto") -> None:
+    def __init__(self, model: nn.Module, optimiser, criterion, class_num: int, accelerator: str = "auto") -> None:
         super().__init__()
         self._model = model
         self._optimiser = optimiser
         self._criterion = criterion
+        self._class_num = class_num
         self._accelerator = get_device(accelerator)
 
     def _epoch_train(self, dataloader: DataLoader | TorchDataLoader) -> float:
@@ -61,9 +62,8 @@ class UNetSegmentationTrainer(QObject):
         self._model.eval()
 
         _loss: float = 0.0
-        _correct: float = 0.0
+        _mIoU: float = 0.0
         _batch_num: float = 0.0
-        _total_pixels: float = 0.0
         with no_grad():
             for features, labels in dataloader:
                 features, labels = features.to(device(self._accelerator)), labels.to(device(self._accelerator))
@@ -77,17 +77,29 @@ class UNetSegmentationTrainer(QObject):
                 loss = self._criterion(outputs, labels)
 
                 _loss += loss.item()
-                _correct += self._get_accuracy(outputs, labels)
+                _mIoU += self._calculate_mIoU(outputs, labels, self._class_num)
                 _batch_num += 1.0
-                _total_pixels += labels.numel()
 
-        return _loss / _batch_num, _correct / _total_pixels
+        return _loss / _batch_num, _mIoU / _batch_num
 
     @staticmethod
-    def _get_accuracy(outputs: Tensor, labels: Tensor) -> float:
-        """ Get accuracy of the model """
-        predictions = outputs.argmax(dim=1)
-        return predictions.eq(labels).sum().item()
+    def _calculate_mIoU(outputs: Tensor, labels: Tensor, num_classes: int) -> float:
+        """ Calculate mean Intersection over Union (mIoU) """
+        predictions = outputs.argmax(dim=1)  # [B, H, W]
+
+        iou_per_class = []
+        for class_id in range(num_classes):
+            pred_mask = (predictions == class_id)
+            true_mask = (labels == class_id)
+
+            intersection = (pred_mask & true_mask).sum().float()
+            union = (pred_mask | true_mask).sum().float()
+
+            if union > 0:
+                iou = intersection / union
+                iou_per_class.append(iou.item())
+
+        return sum(iou_per_class) / len(iou_per_class) if iou_per_class else 0.0
 
     def fit(self,
             train_loader: DataLoader | TorchDataLoader, valid_loader: DataLoader | TorchDataLoader,
@@ -107,15 +119,15 @@ class UNetSegmentationTrainer(QObject):
 
         for epoch in range(epochs):
             train_loss = self._epoch_train(train_loader)
-            valid_loss, accuracy = self._epoch_valid(valid_loader)
+            valid_loss, mIoU = self._epoch_valid(valid_loader)
 
             # Emit training and validation progress signal
-            self.losses.emit(epoch + 1, train_loss, valid_loss, accuracy)
+            self.losses.emit(epoch + 1, train_loss, valid_loss, mIoU)
 
             print(f"Epoch [{epoch + 1}/{epochs}] - "
                   f"Train Loss: {train_loss:.4f} - "
                   f"Valid Loss: {valid_loss:.4f} - "
-                  f"Accuracy: {accuracy:.2%}")
+                  f"mean Intersection over Union: {mIoU:.4f}")
 
             # Save the model if it has the best validation loss so far
             if valid_loss < _best_valid_loss - _min_delta:
