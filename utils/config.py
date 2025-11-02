@@ -18,6 +18,8 @@ class FilePaths:
     MODEL: Path = BASE_DIR / "params/model.pth"
     DATASET_TRAIN = BASE_DIR / "data/train/"
     DATASET_TEST = BASE_DIR / "data/test/"
+    DATASET_VALID = BASE_DIR / "data/valid/"
+    CLASSES_DICTIONARY = BASE_DIR / "data/class_dict.csv"
 
 
 @dataclass
@@ -46,7 +48,7 @@ class UNetParams:
 @dataclass
 class Hyperparameters:
     ALPHA: float = 1e-3
-    EPOCHS: int = 50
+    EPOCHS: int = 10
     ACCELERATOR: str = "cuda" if cuda.is_available() else "cpu"
 
 
