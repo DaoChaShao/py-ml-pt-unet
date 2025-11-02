@@ -1,7 +1,23 @@
 <!-- insertion marker -->
-<a name="0.0.1"></a>
+<a name="0.1.0"></a>
 
-## [0.0.1](https://github.com///compare/5186080fea9416dee53b3b0a8d1c0badbd82bea1...0.0.1) (2025-11-01)
+## [0.1.0](https://github.com///compare/5186080fea9416dee53b3b0a8d1c0badbd82bea1...0.1.0) (2025-11-02)
+
+### Features
+
+- add predictor script for model inference and evaluation ([1cfcd50](https://github.com///commit/1cfcd50bc3c03769fcabf4fc04f92dc11972355f))
+
+### Bug Fixes
+
+- rename unet.py to unet_seg_setter.py for clarity; add MaskToClassID class for mask conversion ([bafc384](https://github.com///commit/bafc3847107f3197e7c11cb5babd07cdf97b32e9))
+- rename segment.py to unet_seg_model.py for clarity ([ff3bf2a](https://github.com///commit/ff3bf2ad9e2e049274b59529efce6ccb275fdd1a))
+- rename unet_seg.py to train_unet_seg.py for clarity; update accuracy calculation to mean Intersection over Union (mIoU) ([224bb1a](https://github.com///commit/224bb1a4e7516e0726c8302729ccb7db543f546a))
+- rename rnn_class.py to train_rnn_class.py for clarity ([9fd1fd1](https://github.com///commit/9fd1fd11aa46e83acb7bf9328aa16227c3a1722e))
+- refactor data preprocessing and dataset preparation in main.py; add class verification function ([ada542e](https://github.com///commit/ada542edd65c4ee095e0b353d6fc9df925c5e0ce))
+- add validation dataset path and class dictionary to config.py; reduce default epochs ([5b1998c](https://github.com///commit/5b1998c6b1209e7ad455ed7a7e4a5e449e4d5e33))
+- update loss calculation to use batch number instead of total samples in unet_seg.py ([13f14c3](https://github.com///commit/13f14c3766925982b698fa5f6366cda27c6ad12e))
+- update image and mask transformer checks in unet.py ([7ccc7d0](https://github.com///commit/7ccc7d07cc99f335e765a46528946b6a96210878))
+- correct img_transformer reference and update print statements in main.py ([047d3b7](https://github.com///commit/047d3b76e7d0447a3bf9e56db64a6324649c76c5))
 
 ### Chore
 
@@ -38,6 +54,7 @@
 
 ### Docs
 
+- update CHANGELOG.md to include recent project updates ([dc6d7d6](https://github.com///commit/dc6d7d68bfcc1aa4e6b9abae5297a72ec5e9de8a))
 - update README.zh-CN.md to include a link to the CamVid dataset ([a574554](https://github.com///commit/a574554d8e3a7a474a70fd8ac05d4f43eaecd2fb))
 - update README.md to include a link to the CamVid dataset ([7e3cdd2](https://github.com///commit/7e3cdd20d3d01bac99357c5aa8bbefe3fb199326))
 
