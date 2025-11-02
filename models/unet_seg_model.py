@@ -3,7 +3,7 @@
 # @Time     :   2025/10/31 22:39
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   segment.py
+# @File     :   unet_seg_model.py
 # @Desc     :   
 
 from torch import nn, cat
