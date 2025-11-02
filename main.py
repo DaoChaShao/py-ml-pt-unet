@@ -18,7 +18,7 @@ from dataseter.unet_seg_setter import MaskToClassID, UNetDataset
 from models.unet_seg_model import UNetDoubleConvModel
 from trainers.train_unet_seg import UNetSegmentationTrainer
 from utils.config import CONFIG
-from utils.helper import load_data_paths, Timer
+from utils.helper import load_data_paths, RandomSeed
 from utils.highlighter import red, green
 from utils.PT import TorchDataLoader
 
@@ -157,7 +157,7 @@ def prepare_dataset():
 
 def main() -> None:
     """ Main Function """
-    with Timer("Training UNet Segmentation Model"):
+    with RandomSeed("Training UNet Segmentation Model"):
         # prepare_dataset()
         train, valid, class2id = prepare_dataset()
 
