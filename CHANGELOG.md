@@ -9,6 +9,7 @@
 
 ### Bug Fixes
 
+- replace Timer with RandomSeed in main function for improved randomness control ([f529827](https://github.com///commit/f529827c08f55b6ee851b52e9ad2877a9ff7b7e8))
 - rename unet.py to unet_seg_setter.py for clarity; add MaskToClassID class for mask conversion ([bafc384](https://github.com///commit/bafc3847107f3197e7c11cb5babd07cdf97b32e9))
 - rename segment.py to unet_seg_model.py for clarity ([ff3bf2a](https://github.com///commit/ff3bf2ad9e2e049274b59529efce6ccb275fdd1a))
 - rename unet_seg.py to train_unet_seg.py for clarity; update accuracy calculation to mean Intersection over Union (mIoU) ([224bb1a](https://github.com///commit/224bb1a4e7516e0726c8302729ccb7db543f546a))
@@ -21,6 +22,7 @@
 
 ### Chore
 
+- update CHANGELOG.md for version 0.1.0 and recent project updates ([a04e60a](https://github.com///commit/a04e60ae071bc40e3419466873edd1278ab805b9))
 - add CHANGELOG.md for version 0.0.1 with project updates ([f06cb30](https://github.com///commit/f06cb3087a603155a1fdf686d0e93453c08d6fe5))
 - add BSD 3-Clause License file ([6c878e7](https://github.com///commit/6c878e7750d29cf694077da0c04dff14c0b93381))
 - add CamVid data, such as train, valid and test images and its masks ([19e2e6c](https://github.com///commit/19e2e6c4c313c3a7dfbdc4feccb2c6f2f2b2f634))
