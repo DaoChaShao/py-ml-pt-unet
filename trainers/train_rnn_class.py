@@ -3,7 +3,7 @@
 # @Time     :   2025/10/31 16:26
 # @Author   :   Shawn
 # @Version  :   Version 0.1.0
-# @File     :   rnn_class.py
+# @File     :   train_rnn_class.py
 # @Desc     :   
 
 from PySide6.QtCore import QObject, Signal
